@@ -1819,6 +1819,7 @@ function getInputs() {
         result.authToken = core.getInput('token', { required: true });
         // SSH
         result.sshKey = core.getInput('ssh-key');
+        core.info(`ssh-key param = ${result.sshKey ? result.sshKey : 'not given'}`);
         result.sshKnownHosts = core.getInput('ssh-known-hosts');
         result.sshStrict =
             (core.getInput('ssh-strict') || 'true').toUpperCase() === 'TRUE';
@@ -1892,6 +1893,7 @@ function run() {
         var _a;
         try {
             const sourceSettings = yield inputHelper.getInputs();
+            core.info(`Inputs: ${JSON.stringify(sourceSettings)}`);
             try {
                 // Register problem matcher
                 coreCommand.issueCommand('add-matcher', {}, path.join(__dirname, 'problem-matcher.json'));
