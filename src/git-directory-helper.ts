@@ -16,6 +16,9 @@ export async function prepareExistingDirectory(
   assert.ok(repositoryPath, 'Expected repositoryPath to be defined')
   assert.ok(repositoryUrl, 'Expected repositoryUrl to be defined')
 
+  core.info(`Repository path: ${repositoryPath}`)
+  core.info(`Repository url: ${repositoryUrl}`)
+
   // Indicates whether to delete the directory contents
   let remove = false
 

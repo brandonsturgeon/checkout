@@ -1032,6 +1032,8 @@ function prepareExistingDirectory(git, repositoryPath, repositoryUrl, clean, ref
         var _a;
         assert.ok(repositoryPath, 'Expected repositoryPath to be defined');
         assert.ok(repositoryUrl, 'Expected repositoryUrl to be defined');
+        core.info(`Repository path: ${repositoryPath}`);
+        core.info(`Repository url: ${repositoryUrl}`);
         // Indicates whether to delete the directory contents
         let remove = false;
         // Check whether using git or REST API
@@ -1185,6 +1187,7 @@ function getSource(settings) {
         // Repository URL
         core.info(`Syncing repository: ${settings.repositoryOwner}/${settings.repositoryName}`);
         const repositoryUrl = urlHelper.getFetchUrl(settings);
+        core.info(`repositoryUrl in getSource: ${repositoryUrl}`);
         // Remove conflicting file path
         if (fsHelper.fileExistsSync(settings.repositoryPath)) {
             yield io.rmRF(settings.repositoryPath);
@@ -1819,7 +1822,6 @@ function getInputs() {
         result.authToken = core.getInput('token', { required: true });
         // SSH
         result.sshKey = core.getInput('ssh-key');
-        core.info(`ssh-key param = ${result.sshKey ? result.sshKey : 'not given'}`);
         result.sshKnownHosts = core.getInput('ssh-known-hosts');
         result.sshStrict =
             (core.getInput('ssh-strict') || 'true').toUpperCase() === 'TRUE';
@@ -1893,7 +1895,6 @@ function run() {
         var _a;
         try {
             const sourceSettings = yield inputHelper.getInputs();
-            core.info(`Inputs: ${JSON.stringify(sourceSettings)}`);
             try {
                 // Register problem matcher
                 coreCommand.issueCommand('add-matcher', {}, path.join(__dirname, 'problem-matcher.json'));
@@ -2456,7 +2457,6 @@ function getFetchUrl(settings) {
         const url = `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`;
         core.info(`Using SSH key, url is: ${url}`);
     }
-    core.info(`Settings: ${JSON.stringify(settings)}`);
     // "origin" is SCHEME://HOSTNAME[:PORT]
     return `${serviceUrl.origin}/${encodedOwner}/${encodedName}`;
 }

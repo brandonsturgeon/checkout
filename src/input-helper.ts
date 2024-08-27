@@ -140,8 +140,6 @@ export async function getInputs(): Promise<IGitSourceSettings> {
 
   // SSH
   result.sshKey = core.getInput('ssh-key')
-  core.info(`ssh-key param = ${result.sshKey ? result.sshKey : 'not given'}`)
-
   result.sshKnownHosts = core.getInput('ssh-known-hosts')
   result.sshStrict =
     (core.getInput('ssh-strict') || 'true').toUpperCase() === 'TRUE'

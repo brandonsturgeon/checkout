@@ -8,7 +8,6 @@ import * as stateHelper from './state-helper'
 async function run(): Promise<void> {
   try {
     const sourceSettings = await inputHelper.getInputs()
-    core.info(`Inputs: ${JSON.stringify(sourceSettings)}`)
 
     try {
       // Register problem matcher
