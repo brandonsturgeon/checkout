@@ -1,4 +1,5 @@
 import * as assert from 'assert'
+import * as core from '@actions/core'
 import {URL} from 'url'
 import {IGitSourceSettings} from './git-source-settings'
 
@@ -13,8 +14,10 @@ export function getFetchUrl(settings: IGitSourceSettings): string {
   const encodedName = encodeURIComponent(settings.repositoryName)
   if (settings.sshKey) {
     const user = settings.sshUser.length > 0 ? settings.sshUser : 'git'
-    return `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`
+    const url = `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`
+    core.info(`Using SSH key, url is: ${url}`)
   }
+  core.info(`Settings: ${JSON.stringify(settings)}`)
 
   // "origin" is SCHEME://HOSTNAME[:PORT]
   return `${serviceUrl.origin}/${encodedOwner}/${encodedName}`

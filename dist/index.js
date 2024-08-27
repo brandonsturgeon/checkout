@@ -2441,6 +2441,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isGhes = exports.getServerApiUrl = exports.getServerUrl = exports.getFetchUrl = void 0;
 const assert = __importStar(__nccwpck_require__(9491));
+const core = __importStar(__nccwpck_require__(2186));
 const url_1 = __nccwpck_require__(7310);
 function getFetchUrl(settings) {
     assert.ok(settings.repositoryOwner, 'settings.repositoryOwner must be defined');
@@ -2450,8 +2451,10 @@ function getFetchUrl(settings) {
     const encodedName = encodeURIComponent(settings.repositoryName);
     if (settings.sshKey) {
         const user = settings.sshUser.length > 0 ? settings.sshUser : 'git';
-        return `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`;
+        const url = `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`;
+        core.info(`Using SSH key, url is: ${url}`);
     }
+    core.info(`Settings: ${JSON.stringify(settings)}`);
     // "origin" is SCHEME://HOSTNAME[:PORT]
     return `${serviceUrl.origin}/${encodedOwner}/${encodedName}`;
 }
