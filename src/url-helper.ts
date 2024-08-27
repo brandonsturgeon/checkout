@@ -16,6 +16,7 @@ export function getFetchUrl(settings: IGitSourceSettings): string {
     const user = settings.sshUser.length > 0 ? settings.sshUser : 'git'
     const url = `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`
     core.info(`Using SSH key, url is: ${url}`)
+    return url
   }
 
   // "origin" is SCHEME://HOSTNAME[:PORT]
